@@ -1,0 +1,37 @@
+Resources:
+  myStaticWebsiteHostingBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: vishcfnhost
+      WebsiteConfiguration:
+        IndexDocument: index.html
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: ObjectWriter
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+  myStaticWebsiteHostingBucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      Bucket: !Ref myStaticWebsiteHostingBucket
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Join 
+              - ''
+              - - 'arn:aws:s3:::'
+                - !Ref myStaticWebsiteHostingBucket
+                - /*
+Outputs:
+  outputWebsiteURL:
+    Value: !GetAtt 
+      - myStaticWebsiteHostingBucket
+      - WebsiteURL
+    Description: Static website URL
