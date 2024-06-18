@@ -2,7 +2,7 @@ Resources:
   myStaticWebsiteHostingBucket:
     Type: 'AWS::S3::Bucket'
     Properties:
-      BucketName: vishcfnhost-testing
+      BucketName: !Ref StaticWebsiteName
       WebsiteConfiguration:
         IndexDocument: index.html
       OwnershipControls:
@@ -13,6 +13,7 @@ Resources:
         BlockPublicPolicy: false
         IgnorePublicAcls: false
         RestrictPublicBuckets: false
+
   myStaticWebsiteHostingBucketPolicy:
     Type: 'AWS::S3::BucketPolicy'
     Properties:
@@ -24,14 +25,14 @@ Resources:
             Effect: Allow
             Principal: '*'
             Action: 's3:GetObject'
-            Resource: !Join 
-              - ''
-              - - 'arn:aws:s3:::'
-                - !Ref myStaticWebsiteHostingBucket
-                - /*
+            Resource: !Join [ '', [ 'arn:aws:s3:::', !Ref myStaticWebsiteHostingBucket, '/*' ] ]
+
 Outputs:
   outputWebsiteURL:
-    Value: !GetAtt 
-      - myStaticWebsiteHostingBucket
-      - WebsiteURL
+    Value: !GetAtt [ myStaticWebsiteHostingBucket, WebsiteURL ]
     Description: Static website URL
+
+Parameters:
+  StaticWebsiteName:
+    Type: String
+    Description: Name for the static website S3 bucket
