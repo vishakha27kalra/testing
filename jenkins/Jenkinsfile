@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+    environment {
+        AWS_SESSION_TOKEN = credentials('aws-session-token')
+    }
+    stages {
+        stage('Setup AWS') {
+            steps {
+                
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'official-aws',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]){
+                        
+                        sh 'aws --version'
+                        sh "aws s3 ls"
+                    }
+            }
+        }
+        stage('test'){
+            steps{
+                echo "deploying static website using cfn and s3"
+            }
+        }
+        stage('cloning'){
+            steps{
+                script{
+                    sh "rm -rf testing"
+                    sh "git clone https://github.com/vishakha27kalra/testing.git"
+                    sh "pwd"
+                    sh "cd ./testing"
+                    sh "ls -R testing" 
+                    sh 'cp ./testing/website2.yaml /tmp/website2.yaml'
+                    //sh "aws cloudformation deploy --template-file /tmp/website2.yaml --stack-name stacknew --parameter-overrides BucketName=vishcfnhost5"
+                }
+            }
+        }
+        stage('Deploy CloudFormation') {
+            steps {
+                script {
+                    def templateFile = '/tmp/website2.yaml'
+                    def stackName = 'stacknew'
+                    def parameters = [
+                        'BucketName': 'vishcfnhost5'
+                    ]
+
+                    mygroovy(templateFile, stackName, parameters)
+                }
+            }
+        }
+        
+    }
+}
