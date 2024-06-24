@@ -1,6 +1,6 @@
 // vars/mygroovy.groovy
 def call(String stackName) {
-    def templateFile = '/tmp/website2.yaml'
+    def templateFile = './website2.yaml'
     def parameters = [
         'BucketName': 'vishcfnhost5'
     ]
