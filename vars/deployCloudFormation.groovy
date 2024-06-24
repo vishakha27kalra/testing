@@ -1,6 +1,16 @@
 // vars/deployCloudFormation.groovy
+def call() {
+    def templateFile = '/tmp/website2.yaml'
+    def stackName = 'stacknew'
+    def parameters = [
+        'BucketName': 'vishcfnhost5'
+    ]
 
-def call(String templateFile, String stackName, Map<String, String> parameters) {
+    // Execute CloudFormation deployment
+    deploy(templateFile, stackName, parameters)
+}
+
+def deploy(String templateFile, String stackName, Map<String, String> parameters) {
     def awsCliCmd = "aws cloudformation deploy"
     def parameterOverrides = parameters.collect { key, value -> "--parameter-overrides ${key}=${value}" }.join(" ")
 
