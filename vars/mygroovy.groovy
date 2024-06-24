@@ -19,7 +19,7 @@ def deploy(String templateFile, String stackName, Map<String, String> parameters
     ]
 
     parameters.each { key, value ->
-        awsCliArgs += "--parameter-overrides", "${key}=${value}"
+        awsCliArgs.addAll(["--parameter-overrides", "${key}=${value}"])
     }
 
     def command = [awsCliCmd] + awsCliArgs
