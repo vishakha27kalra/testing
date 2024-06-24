@@ -1,5 +1,5 @@
 // vars/mygroovy.groovy
-def mygroovy() {
+def call() {
     def templateFile = '/tmp/website2.yaml'
     def stackName = 'stacknew'
     def parameters = [
