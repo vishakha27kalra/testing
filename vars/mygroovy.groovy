@@ -1,5 +1,5 @@
-// vars/deployCloudFormation.groovy
-def deployCloudFormation() {
+// vars/mygroovy.groovy
+def mygroovy() {
     def templateFile = '/tmp/website2.yaml'
     def stackName = 'stacknew'
     def parameters = [
