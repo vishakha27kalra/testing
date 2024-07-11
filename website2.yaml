@@ -1,8 +1,12 @@
+Parameters:
+  bucketName:
+    Type: String
+
 Resources:
   myStaticWebsiteHostingBucket:
     Type: 'AWS::S3::Bucket'
     Properties:
-      BucketName: vishcfnhost-testing
+      BucketName: !Sub '${bucketName}'
       WebsiteConfiguration:
         IndexDocument: index.html
       OwnershipControls:

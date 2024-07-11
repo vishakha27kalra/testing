@@ -36,8 +36,12 @@ pipeline {
         }
         stage('Deploy CloudFormation') {
             steps {
-                mygroovy()
+                script{
+                    def stackName = 'stacknew'
+                    mygroovy(stackName)
+                }    
             }
-        }    
+        }
+        
     }
 }
