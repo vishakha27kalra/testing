@@ -1,6 +1,7 @@
 Parameters:
   bucketName:
     Type: String
+    Default: s3bucketForHosting
 
 Resources:
   myStaticWebsiteHostingBucket:
