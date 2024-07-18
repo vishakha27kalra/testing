@@ -1,8 +1,18 @@
 Parameters:
   bucketName:
     Type: String
-    Default: sthreebucketforhosting
-
+  stackName:
+    Type: String
+  environment:
+    Type: String
+    AllowedValues:
+      - dev
+      - stage
+      - testing
+  product:
+    Type: String
+  service:
+    Type: String
 Resources:
   myStaticWebsiteHostingBucket:
     Type: 'AWS::S3::Bucket'

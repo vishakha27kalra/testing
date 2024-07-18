@@ -1,47 +1,56 @@
 pipeline {
     agent any
+
     environment {
         AWS_SESSION_TOKEN = credentials('aws-session-token')
+        AWS_REGION="""${params.REGION_NAME}"""
+    }
+    parameters {
+        //string(name: 'STACK_NAME', description: 'Enter your stack name')
+        string(name: 'ENVIRONMENT', description: 'Enter the environment')
+        string(name: 'PRODUCT', description: 'Enter the product name')
+        string(name: 'SERVICE', description: 'Enter the service name')
+        string(name: 'REGION_NAME', description:'Enter Region(ex: us-east-1, us-est-2)')
+        string(name: 'BUCKET_NAME', description: 'Enter the S3 bucket name')
     }
     stages {
-        stage('Setup AWS') {
+        stage('Checkout') {
             steps {
-                
+                checkout scm
+            }
+        }
+        stage('aws-authentication') {
+            steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
                     credentialsId: 'official-aws',
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]){
-                        
-                        sh 'aws --version'
-                        sh "aws s3 ls"
-                    }
-            }
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+                   ]]){
+                       println cfnUpdate(
+                               stack: ${params.ENVIRONMENT}-${params.PRODUCT}-${params.SERVICE}, 
+                               file: './aws/s3/cloudformation/services/template.yaml',
+                               params:["""bucketName=${params.BUCKET_NAME}"""],
+                               timeoutInMinutes: 60
+                            )
+                   }
+            }  
         }
-        stage('test'){
-            steps{
-                echo "deploying static website using cfn and s3"
-            }
+    }
+    post {
+        always {
+            echo 'Cleaning up workspace...'
+            cleanWs()
         }
-        stage('Checkout Code') {
-            steps {
-                script {
-                    // Clean up previous clone if exists
-                    sh 'rm -rf testing'
-                    git credentialsId: 'github-creds', url: 'https://github.com/vishakha27kalra/testing.git', branch: 'main'
-                    sh 'pwd'
-                    sh 'ls -R'   
-                }
-            }
+        failure {
+            echo 'Build failed. Please check the logs for details.'
         }
-        stage('Deploy CloudFormation') {
-            steps {
-                script{
-                    def stackName = 'stacknew'
-                    mygroovy(stackName)
-                }    
-            }
+        success {
+            echo 'Build succeeded!'
         }
-        
     }
 }
+
+
+
+
