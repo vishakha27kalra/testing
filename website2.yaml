@@ -1,8 +1,6 @@
 Parameters:
   bucketName:
     Type: String
-  stackName:
-    Type: String
   environment:
     Type: String
     AllowedValues:
