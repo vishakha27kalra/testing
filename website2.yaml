@@ -7,10 +7,13 @@ Parameters:
       - dev
       - stage
       - testing
+    Default: dev
   product:
     Type: String
+    Default: pro
   service:
     Type: String
+    Default: serv
 Resources:
   myStaticWebsiteHostingBucket:
     Type: 'AWS::S3::Bucket'
