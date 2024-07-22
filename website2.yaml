@@ -7,18 +7,15 @@ Parameters:
       - dev
       - stage
       - testing
-    Default: dev
   product:
     Type: String
-    Default: pro
   service:
     Type: String
-    Default: serv
 Resources:
   myStaticWebsiteHostingBucket:
     Type: 'AWS::S3::Bucket'
     Properties:
-      BucketName: !Sub '${bucketName}'
+      BucketName: !Sub '${environment}-${product}-${service}-${bucketName}'
       WebsiteConfiguration:
         IndexDocument: index.html
       OwnershipControls:
