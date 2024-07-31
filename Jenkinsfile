@@ -14,31 +14,19 @@ pipeline {
                 ])
                 script {
                     // Fetching in-built variables after checkout
-                    def gitUrl = env.GIT_URL
-                    def gitCommitId = env.GIT_COMMIT
-                    def gitBranch = env.GIT_BRANCH
+                    
                     def gitCommitMessage = env.GIT_MESSAGE ?: 'No commit message available'
                     def gitCommitAuthor = env.GIT_AUTHOR_NAME ?: 'Unknown Author'
                     if (gitCommitMessage == 'No commit message available' || gitCommitAuthor == 'Unknown Author') {
                         gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                         gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
                     }
-                    String url = "${env.BUILD_URL}"
-
-                    // Echoing the values
-                    // echo "Git URL: ${gitUrl}"
-                    // echo "Commit ID: ${gitCommitId}"
-                    // echo "Branch: ${gitBranch}"
-                    // echo "Commit Message: ${gitCommitMessage}"
-                    // echo "Commit Author: ${gitCommitAuthor}"
-                    // sh "env"
                     def params = [
-                    //message: "Build FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                     url: "${env.BUILD_URL}",
-                    gitUrl: gitUrl,
+                    gitUrl: "${env.GIT_URL}",
                     gitBranch: "${env.BRANCH_NAME}",
                     gitCommitMessage: gitCommitMessage,
-                    gitCommitId: gitCommitId,
+                    gitCommitId: "${env.GIT_COMMIT}",
                     gitCommitAuthor: gitCommitAuthor
                     ]
                     params.each { key, value ->
