@@ -16,7 +16,7 @@ pipeline {
                     params = [
                         url: "${env.BUILD_URL}",
                         gitUrl: "${env.GIT_URL}",
-                        gitBranch: "${env.GIT_BRANCH}",
+                        gitBranch: "${env.BRANCH_NAME}",
                         gitCommitMessage: gitCommitMessage,
                         gitCommitId: "${env.GIT_COMMIT}",
                         gitCommitAuthor: gitCommitAuthor
