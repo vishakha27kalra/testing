@@ -23,14 +23,28 @@ pipeline {
                         gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                         gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
                     }
+                    String url = "${env.BUILD_URL}"
 
                     // Echoing the values
-                    echo "Git URL: ${gitUrl}"
-                    echo "Commit ID: ${gitCommitId}"
-                    echo "Branch: ${gitBranch}"
-                    echo "Commit Message: ${gitCommitMessage}"
-                    echo "Commit Author: ${gitCommitAuthor}"
-                    sh "env"
+                    // echo "Git URL: ${gitUrl}"
+                    // echo "Commit ID: ${gitCommitId}"
+                    // echo "Branch: ${gitBranch}"
+                    // echo "Commit Message: ${gitCommitMessage}"
+                    // echo "Commit Author: ${gitCommitAuthor}"
+                    // sh "env"
+                    def params = [
+                    //message: "Build FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    url: "${env.BUILD_URL}",
+                    gitUrl: gitUrl,
+                    gitBranch: "${env.BRANCH_NAME}",
+                    gitCommitMessage: gitCommitMessage,
+                    gitCommitId: gitCommitId,
+                    gitCommitAuthor: gitCommitAuthor
+                    ]
+                    params.each { key, value ->
+                        echo "${key}: ${value}"
+                    }
+
                 }
                 
             }
