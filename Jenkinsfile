@@ -24,7 +24,7 @@ pipeline {
                     def params = [
                     url: "${env.BUILD_URL}",
                     gitUrl: "${env.GIT_URL}",
-                    gitBranch: "${env.BRANCH_NAME}",
+                    gitBranch: "${env.GIT_BRANCH}",
                     gitCommitMessage: gitCommitMessage,
                     gitCommitId: "${env.GIT_COMMIT}",
                     gitCommitAuthor: gitCommitAuthor
