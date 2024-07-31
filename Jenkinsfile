@@ -1,3 +1,4 @@
+def params = [:]
 pipeline {
     agent any
     
