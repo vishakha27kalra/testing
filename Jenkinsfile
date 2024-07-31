@@ -10,7 +10,7 @@ pipeline {
                           userRemoteConfigs: [[
                               url: 'https://github.com/vishakha27kalra/testing.git',
                               credentialsId: 'github-creds' // Refer to the credentials added in Jenkins
-                          ]]
+                            ]]
                 ])
                 script {
                     // Fetching in-built variables after checkout
@@ -29,9 +29,6 @@ pipeline {
                     gitCommitId: "${env.GIT_COMMIT}",
                     gitCommitAuthor: gitCommitAuthor
                     ]
-                    params.each { key, value ->
-                        echo "${key}: ${value}"
-                    }
 
                 }
                 
