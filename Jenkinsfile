@@ -21,17 +21,17 @@ pipeline {
                         gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                         gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
                     }
-                    def params = [
-                    url: "${env.BUILD_URL}",
-                    gitUrl: "${env.GIT_URL}",
-                    gitBranch: "${env.GIT_BRANCH}",
-                    gitCommitMessage: gitCommitMessage,
-                    gitCommitId: "${env.GIT_COMMIT}",
-                    gitCommitAuthor: gitCommitAuthor
-                    ]
-                    params.each { key, value ->
-                        echo "${key}: ${value}"
-                    }
+                    // def params = [
+                    // url: "${env.BUILD_URL}",
+                    // gitUrl: "${env.GIT_URL}",
+                    // gitBranch: "${env.GIT_BRANCH}",
+                    // gitCommitMessage: gitCommitMessage,
+                    // gitCommitId: "${env.GIT_COMMIT}",
+                    // gitCommitAuthor: gitCommitAuthor
+                    // ]
+                    // params.each { key, value ->
+                    //     echo "${key}: ${value}"
+                    // }
 
                 }
                 
@@ -45,6 +45,45 @@ pipeline {
 
         
 
+    }post {
+        success {
+            script {
+                def params = [
+                    message: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    url: "${env.BUILD_URL}",
+                    gitUrl: "${env.GIT_URL}",
+                    gitBranch: "${env.GIT_BRANCH}",
+                    gitCommitMessage: gitCommitMessage,
+                    gitCommitId: "${env.GIT_COMMIT}",
+                    gitCommitAuthor: gitCommitAuthor
+                ]
+                params.each { key, value ->
+                        echo "${key}: ${value}"
+                }
+            }
+        }
+        failure {
+            script {
+                
+                def params = [
+                    message: "Build FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    url: "${env.BUILD_URL}",
+                    gitUrl: "${env.GIT_URL}",
+                    gitBranch: "${env.GIT_BRANCH}",
+                    //gitCommitMessage: gitCommitMessage,
+                    gitCommitId: "${env.GIT_COMMIT}",
+                    //gitCommitAuthor: gitCommitAuthor
+                ]
+                params.each { key, value ->
+                        echo "${key}: ${value}"
+                }
+    
+                
+            }
+        }
+        always {
+            echo 'Pipeline completed.'
+        }
     }
     
 }
