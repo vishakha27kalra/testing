@@ -12,19 +12,7 @@ pipeline {
                               credentialsId: 'github-creds' // Refer to the credentials added in Jenkins
                           ]]
                 ])
-                script {
-                    // Fetching in-built variables after checkout
-                    def gitCommitMessage = env.GIT_MESSAGE ?: 'No commit message available'
-                    def gitCommitAuthor = env.GIT_AUTHOR_NAME ?: 'Unknown Author'
-                    if (gitCommitMessage == 'No commit message available' || gitCommitAuthor == 'Unknown Author') {
-                        gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-                        gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
-                    }
-                    
-                    // Storing the variables in the environment for later use
-                    env.GIT_COMMIT_MESSAGE = gitCommitMessage
-                    env.GIT_COMMIT_AUTHOR = gitCommitAuthor
-                }
+                
             }
         }
         stage('Build') {
@@ -50,6 +38,7 @@ pipeline {
                     echo "${key}: ${value}"
                 }
             }
+
         }
         failure {
             script {
