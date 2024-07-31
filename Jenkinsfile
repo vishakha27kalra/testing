@@ -7,13 +7,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Use the credentials defined in Jenkins
-                checkout([$class: 'GitSCM',
-                          branches: [[name: '*/main']],
-                          userRemoteConfigs: [[
-                              url: 'https://github.com/vishakha27kalra/testing.git',
-                              credentialsId: 'github-creds' // Refer to the credentials added in Jenkins
-                          ]]
-                ])
+                checkout scm
                 script {
                     // Fetching in-built variables after checkout
                     
