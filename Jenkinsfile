@@ -14,38 +14,27 @@ pipeline {
                 ])
                 script {
                     // Fetching in-built variables after checkout
-                    
                     def gitCommitMessage = env.GIT_MESSAGE ?: 'No commit message available'
                     def gitCommitAuthor = env.GIT_AUTHOR_NAME ?: 'Unknown Author'
                     if (gitCommitMessage == 'No commit message available' || gitCommitAuthor == 'Unknown Author') {
                         gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                         gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
                     }
-                    // def params = [
-                    // url: "${env.BUILD_URL}",
-                    // gitUrl: "${env.GIT_URL}",
-                    // gitBranch: "${env.GIT_BRANCH}",
-                    // gitCommitMessage: gitCommitMessage,
-                    // gitCommitId: "${env.GIT_COMMIT}",
-                    // gitCommitAuthor: gitCommitAuthor
-                    // ]
-                    // params.each { key, value ->
-                    //     echo "${key}: ${value}"
-                    // }
-
+                    
+                    // Storing the variables in the environment for later use
+                    env.GIT_COMMIT_MESSAGE = gitCommitMessage
+                    env.GIT_COMMIT_AUTHOR = gitCommitAuthor
                 }
-                
             }
         }
         stage('Build') {
             steps {
-                echo "This is panasonic iot pipeline"
+                echo "This is Panasonic IoT pipeline"
             }
         }
-
-        
-
-    }post {
+    }
+    
+    post {
         success {
             script {
                 def params = [
@@ -53,37 +42,31 @@ pipeline {
                     url: "${env.BUILD_URL}",
                     gitUrl: "${env.GIT_URL}",
                     gitBranch: "${env.GIT_BRANCH}",
-                    gitCommitMessage: gitCommitMessage,
+                    gitCommitMessage: env.GIT_COMMIT_MESSAGE,
                     gitCommitId: "${env.GIT_COMMIT}",
-                    gitCommitAuthor: gitCommitAuthor
+                    gitCommitAuthor: env.GIT_COMMIT_AUTHOR
                 ]
                 params.each { key, value ->
-                        echo "${key}: ${value}"
+                    echo "${key}: ${value}"
                 }
             }
         }
         failure {
             script {
-                
                 def params = [
                     message: "Build FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                     url: "${env.BUILD_URL}",
                     gitUrl: "${env.GIT_URL}",
                     gitBranch: "${env.GIT_BRANCH}",
-                    //gitCommitMessage: gitCommitMessage,
                     gitCommitId: "${env.GIT_COMMIT}",
-                    //gitCommitAuthor: gitCommitAuthor
                 ]
                 params.each { key, value ->
-                        echo "${key}: ${value}"
+                    echo "${key}: ${value}"
                 }
-    
-                
             }
         }
         always {
             echo 'Pipeline completed.'
         }
     }
-    
 }
