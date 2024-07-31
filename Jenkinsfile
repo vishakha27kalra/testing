@@ -59,3 +59,6 @@ pipeline {
         }
     }
 }
+def notifyTeams(Map<String, String> params){
+    echo "params.message"
+}
