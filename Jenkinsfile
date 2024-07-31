@@ -25,14 +25,17 @@ pipeline {
     post {
         success {
             script {
+                def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                def gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
+
                 def params = [
                     message: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                     url: "${env.BUILD_URL}",
                     gitUrl: "${env.GIT_URL}",
                     gitBranch: "${env.GIT_BRANCH}",
-                    gitCommitMessage: env.GIT_COMMIT_MESSAGE,
+                    gitCommitMessage: gitCommitMessage,
                     gitCommitId: "${env.GIT_COMMIT}",
-                    gitCommitAuthor: env.GIT_COMMIT_AUTHOR
+                    gitCommitAuthor: gitCommitAuthor
                 ]
                 params.each { key, value ->
                     echo "${key}: ${value}"
