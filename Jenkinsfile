@@ -17,12 +17,8 @@ pipeline {
                 script {
                     // Fetching in-built variables after checkout
                     
-                    def gitCommitMessage = env.GIT_MESSAGE ?: 'No commit message available'
-                    def gitCommitAuthor = env.GIT_AUTHOR_NAME ?: 'Unknown Author'
-                    if (gitCommitMessage == 'No commit message available' || gitCommitAuthor == 'Unknown Author') {
-                        gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-                        gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
-                    }
+                    def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                    def gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
                     params = [
                         url: "${env.BUILD_URL}",
                         gitUrl: "${env.GIT_URL}",
