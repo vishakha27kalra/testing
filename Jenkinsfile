@@ -37,6 +37,7 @@ pipeline {
                 params.each { key, value ->
                     echo "${key}: ${value}"
                 }
+                notifyTeams(params)
             }
 
         }
