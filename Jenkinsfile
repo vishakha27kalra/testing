@@ -52,16 +52,9 @@ pipeline {
         }
         failure {
             script {
-                def params = [
-                    message: "Build FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                    url: "${env.BUILD_URL}",
-                    gitUrl: "${env.GIT_URL}",
-                    gitBranch: "${env.GIT_BRANCH}",
-                    gitCommitId: "${env.GIT_COMMIT}",
-                ]
-                params.each { key, value ->
-                    echo "${key}: ${value}"
-                }
+                message: "Build Failure: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+                notifyTeams(params,message)
+                
             }
         }
         always {
