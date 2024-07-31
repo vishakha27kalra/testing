@@ -22,7 +22,7 @@ pipeline {
                         gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                         gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
                     }
-                    def params = [
+                    params = [
                     url: "${env.BUILD_URL}",
                     gitUrl: "${env.GIT_URL}",
                     gitBranch: "${env.GIT_BRANCH}",
