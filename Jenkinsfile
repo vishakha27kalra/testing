@@ -65,4 +65,10 @@ pipeline {
 }
 def notifyTeams(Map<String, String> params){
     echo "$params.message"
+    echo "$params.gitUrl"
+    echo "$params.gitBranch"
+    echo "$params.gitCommitMessage"
+    echo "$params.gitCommitId"
+    echo "$params.gitCommitAuthor"
+    
 }
