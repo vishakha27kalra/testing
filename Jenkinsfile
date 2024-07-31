@@ -24,7 +24,7 @@ pipeline {
                     def gitCommitId = env.GIT_COMMIT
                     def gitBranch = env.GIT_BRANCH
                     def gitCommitMessage = env.GIT_MESSAGE ?: 'No commit message available'
-                    def gitCommitAuthor = env.GIT_COMMITTER_NAME ?: 'Unknown Author'
+                    def gitCommitAuthor = env.GIT_AUTHOR_NAME ?: 'Unknown Author'
 
                     // Echoing the values
                     echo "Git URL: ${gitUrl}"
