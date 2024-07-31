@@ -32,6 +32,7 @@ pipeline {
                     echo "Branch: ${gitBranch}"
                     echo "Commit Message: ${gitCommitMessage}"
                     echo "Commit Author: ${gitCommitAuthor}"
+                    sh "env"
                 }
             }
         }
