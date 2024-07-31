@@ -13,21 +13,27 @@ pipeline {
                           ]]
                 ])
                 script {
-                    def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-                    def gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
-
+                    // Fetching in-built variables after checkout
+                    
+                    def gitCommitMessage = env.GIT_MESSAGE ?: 'No commit message available'
+                    def gitCommitAuthor = env.GIT_AUTHOR_NAME ?: 'Unknown Author'
+                    if (gitCommitMessage == 'No commit message available' || gitCommitAuthor == 'Unknown Author') {
+                        gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                        gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
+                    }
                     def params = [
-                    //message: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                        url: "${env.BUILD_URL}",
-                        gitUrl: "${env.GIT_URL}",
-                        gitBranch: "${env.GIT_BRANCH}",
-                        gitCommitMessage: gitCommitMessage,
-                        gitCommitId: "${env.GIT_COMMIT}",
-                        gitCommitAuthor: gitCommitAuthor
+                    url: "${env.BUILD_URL}",
+                    gitUrl: "${env.GIT_URL}",
+                    gitBranch: "${env.GIT_BRANCH}",
+                    gitCommitMessage: gitCommitMessage,
+                    gitCommitId: "${env.GIT_COMMIT}",
+                    gitCommitAuthor: gitCommitAuthor
                     ]
-                
+                    params.each { key, value ->
+                        echo "${key}: ${value}"
+                    }
+
                 }
-                
                 
             }
         }
