@@ -16,6 +16,9 @@
                     gitCommitAuthor = parameter.get("GIT_AUTHOR_NAME")
                     url = env.BUILD_URL
                     gitCommitMessage = parameter.get("GIT_COMMIT_MESSAGE")
+                    echo "hihihihi"
+                    println parameter
+                    
                     // println gitCommitId
                     // println url
                     // println gitCommitMessage
