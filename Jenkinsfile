@@ -15,10 +15,10 @@
                     gitCommitAuthor = parameter.get("GIT_AUTHOR_NAME")
                     url = env.BUILD_URL
                     gitCommitMessage = parameter.get("GIT_COMMIT_MESSAGE")
-                    println gitCommitId
-                    println url
-                    println gitCommitMessage
-                    println gitCommitAuthor
+                    // println gitCommitId
+                    // println url
+                    // println gitCommitMessage
+                    // println gitCommitAuthor
                     // Fetching in-built variables after checkout
                     
                     //def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
@@ -54,7 +54,7 @@
             script {
                 // Correctly assign the message variable
                 def message = "Build Failure: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
-                //notifyTeams(params, message)
+                //notifyTeams(parameter, message)
             }
         }
         always {
@@ -63,12 +63,12 @@
     }
 }
 
-// Define the notifyTeams function
-// def notifyTeams(Map<String, String> params, String message) {
-//     echo "Message: ${message}"
-//     echo "Git URL: ${params.gitUrl}"
-//     echo "Branch: ${params.gitBranch}"
-//     echo "Commit Message: ${params.gitCommitMessage}"
-//     echo "Commit ID: ${params.gitCommitId}"
-//     echo "Commit Author: ${params.gitCommitAuthor}"
-// }
+Define the notifyTeams function
+def notifyTeams(Map<String, String> parameter, String message) {
+    echo "Message: ${message}"
+    echo "Git URL: ${parameter.gitUrl}"
+    echo "Branch: ${parameter.gitBranch}"
+    echo "Commit Message: ${parameter.gitCommitMessage}"
+    echo "Commit ID: ${parameter.gitCommitId}"
+    echo "Commit Author: ${parameter.gitCommitAuthor}"
+}
