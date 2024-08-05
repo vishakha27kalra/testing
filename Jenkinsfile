@@ -52,19 +52,7 @@
         }
         stage('Build') {
             steps {
-                script {
-                    def jobUserId, jobUserName
-                    wrap([$class: 'BuildUser']) {
-                        jobUserId = "${BUILD_USER_ID}"
-                        jobUserName = "${BUILD_USER}"
-                    }
-                    if (env.BRANCH_NAME == 'main' || "${jobUserId}" =~ /devops/) {
-                        echo "Building branch ${env.BRANCH_NAME} by user ${jobUserId}"
-                        // Your build steps here
-                    } else {
-                        echo "Pipeline execution not authorized for user ${jobUserId} on branch ${env.BRANCH_NAME}"
-                    }
-                }
+                echo "This is Panasonic IoT pipeline"
             }
         }
     }
