@@ -9,6 +9,8 @@ pipeline {
                 // Use the credentials defined in Jenkins
                 checkout scm
                 script {
+                    Map<String, String> parameter = checkout scm
+                    println parameter
                     // Fetching in-built variables after checkout
                     
                     //def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
@@ -17,10 +19,11 @@ pipeline {
                         url: "${env.BUILD_URL}",
                         gitUrl: "${env.GIT_URL}",
                         gitBranch: "${env.GIT_BRANCH}",
-                        gitCommitMessage: "${GIT_PREVIOUS_COMMIT}",
+                        gitCommitMessage: "${env.GIT_COMMIT_MESSAGE}",
                         gitCommitId: "${env.GIT_COMMIT}",
                         gitCommitAuthor: "${env.GIT_AUTHOR_NAME}"
                     ]
+                    sh "env"
                 }
             }
         }
