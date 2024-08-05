@@ -81,8 +81,8 @@
 
 def notifyGoogleChat(parameter, message) {
     def googleChatWebhookUrl = 'https://chat.googleapis.com/v1/spaces/AAAAKgneo2I/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=_LNdvwSZ08X6DqkQACKgJlry34nvEc4vVDu0xM1g7ZI'
-    def payload = [
-        "cards": [
+    def payload = {
+        "text": """[
             [
                 "header": [
                     "title": message,
@@ -144,8 +144,8 @@ def notifyGoogleChat(parameter, message) {
                     ]
                 ]
             ]
-        ]
-    ]
+        ]"""
+    }
 
     httpRequest httpMode: 'POST',
                 acceptType: 'APPLICATION_JSON',
