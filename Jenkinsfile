@@ -58,7 +58,7 @@
                         jobUserId = "${BUILD_USER_ID}"
                         jobUserName = "${BUILD_USER}"
                     }
-                    if (env.BRANCH_NAME == 'master' && "${jobUserId}" =~ /devops/) {
+                    if (env.BRANCH_NAME == 'main' || "${jobUserId}" =~ /devops/) {
                         echo "Building branch ${env.BRANCH_NAME} by user ${jobUserId}"
                         // Your build steps here
                     } else {
