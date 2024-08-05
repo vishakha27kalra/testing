@@ -12,7 +12,7 @@
                     gitCommitId = parameter.get("GIT_COMMIT")
                     gitUrl = parameter.get("GIT_URL")
                     gitBranch = parameter.get("GIT_BRANCH")
-                    parameter.gitCommitAuthor = gitCommitAuthor
+                    parameter.gitCommitAuthor = "gitCommitAuthor"
                     url = env.BUILD_URL
                     //gitCommitMessage = gitCommitMessage
                 }
