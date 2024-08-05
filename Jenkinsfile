@@ -19,7 +19,7 @@ pipeline {
                         gitBranch: "${env.GIT_BRANCH}",
                         gitCommitMessage: "${GIT_PREVIOUS_COMMIT}",
                         gitCommitId: "${env.GIT_COMMIT}",
-                        gitCommitAuthor: "${env.GIT_COMMITTER_NAME}"
+                        gitCommitAuthor: "${env.GIT_AUTHOR_NAME}"
                     ]
                     sh "env"
                 }
