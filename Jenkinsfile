@@ -67,9 +67,9 @@
 Define the notifyTeams function
 def notifyTeams(Map<String, String> parameter, String message) {
     echo "Message: ${message}"
-    echo "Git URL: ${parameter.gitUrl}"
-    echo "Branch: ${parameter.gitBranch}"
-    echo "Commit Message: ${parameter.gitCommitMessage}"
-    echo "Commit ID: ${parameter.gitCommitId}"
-    echo "Commit Author: ${parameter.gitCommitAuthor}"
+    echo "Git URL: ${gitUrl}"
+    echo "Branch: ${gitBranch}"
+    echo "Commit Message: ${gitCommitMessage}"
+    echo "Commit ID: ${gitCommitId}"
+    echo "Commit Author: ${gitCommitAuthor}"
 }
