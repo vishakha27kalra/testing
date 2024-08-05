@@ -79,7 +79,7 @@
 }
 
 def notifyGoogleChat(parameter, message) {
-    def googleChatWebhookUrl = 'https://chat.googleapis.com/v1/spaces/AAAAKgneo2I/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=_LNdvwSZ08X6DqkQACKgJlry34nvEc4vVDu0xM1g7ZI'
+    def googleChatWebhookUrl = 'https://chat.googleapis.com/v1/spaces/AAAAtJ_EhFA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=HhGCI4lxhCF7f7j1sgF7cj8f1T1OMSZoZ_AmnW7ORBo'
     
     def payload = [
         "cards": [
