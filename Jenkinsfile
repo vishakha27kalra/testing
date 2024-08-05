@@ -7,12 +7,13 @@
             steps {
                 script {
                     parameter = checkout scm
-                    //def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                    def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                     def gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
                     gitCommitId = parameter.get("GIT_COMMIT")
                     gitUrl = parameter.get("GIT_URL")
                     gitBranch = parameter.get("GIT_BRANCH")
                     parameter.gitCommitAuthor = gitCommitAuthor
+                    parameter.gitCommitMessage = gitCommitMessage
                     url = env.BUILD_URL
                     //gitCommitMessage = gitCommitMessage
                 }
@@ -83,7 +84,7 @@ def notifyTeams(Map<String, String> parameter, String message) {
     echo "Message: ${message}"
     echo "Git URL: ${gitUrl}"
     echo "Branch: ${gitBranch}"
-    //echo "Commit Message: ${gitCommitMessage}"
+    echo "Commit Message: ${parameter.gitCommitMessage}"
     echo "Commit ID: ${gitCommitId}"
     echo "Commit Author: ${parameter.gitCommitAuthor}"
     echo "build url: ${url}"
