@@ -1,6 +1,4 @@
-def params = [:] 
-
-pipeline {
+ pipeline {
     agent any
     
     stages {
@@ -11,6 +9,10 @@ pipeline {
                 script {
                     Map<String, String> parameter = checkout scm
                     println parameter
+                    GIT_COMMIT = parameter.get("GIT_COMMIT");
+                    GIT_PREVIOUS_SUCCESSFUL_COMMIT = parameter.get("GIT_PREVIOUS_SUCCESSFUL_COMMIT");
+                    println GIT_PREVIOUS_SUCCESSFUL_COMMIT;
+                    println GIT_COMMIT;
                     // Fetching in-built variables after checkout
                     
                     //def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
@@ -39,7 +41,7 @@ pipeline {
             script {
                 // Correctly assign the message variable
                 def message = "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
-                //notifyTeams(params, message)
+                //notifyTeams(parameter, message)
             }
         }
         failure {
