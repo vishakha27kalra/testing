@@ -1,4 +1,4 @@
- //Map<String, String> parameter =[:]
+ Map<String, String> parameter =[:]
  pipeline {
     agent any
     
@@ -6,7 +6,7 @@
         stage('Checkout') {
             steps {
                 script {
-                    Map<String, String> parameter = checkout scm
+                    parameter = checkout scm
                     //def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                     //def gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
                     gitCommitId = parameter.get("GIT_COMMIT")
