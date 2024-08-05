@@ -12,7 +12,7 @@
                     gitCommitId = parameter.get("GIT_COMMIT")
                     gitUrl = parameter.get("GIT_URL")
                     gitBranch = parameter.get("GIT_BRANCH")
-                    parameter.gitCommitAuthor = "gitCommitAuthor"
+                    parameter.gitCommitAuthor = gitCommitAuthor
                     url = env.BUILD_URL
                     //gitCommitMessage = gitCommitMessage
                 }
@@ -85,6 +85,6 @@ def notifyTeams(Map<String, String> parameter, String message) {
     echo "Branch: ${gitBranch}"
     //echo "Commit Message: ${gitCommitMessage}"
     echo "Commit ID: ${gitCommitId}"
-    echo "Commit Author: ${gitCommitAuthor}"
+    echo "Commit Author: ${parameter.gitCommitAuthor}"
     echo "build url: ${url}"
 }
