@@ -11,15 +11,15 @@ pipeline {
                 script {
                     // Fetching in-built variables after checkout
                     
-                    def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-                    def gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
+                    //def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                    //def gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
                     params = [
                         url: "${env.BUILD_URL}",
                         gitUrl: "${env.GIT_URL}",
                         gitBranch: "${env.GIT_BRANCH}",
-                        gitCommitMessage: gitCommitMessage,
+                        gitCommitMessage: "${GIT_PREVIOUS_COMMIT}",
                         gitCommitId: "${env.GIT_COMMIT}",
-                        gitCommitAuthor: gitCommitAuthor
+                        gitCommitAuthor: "${env.GIT_AUTHOR_NAME}"
                     ]
                 }
             }
