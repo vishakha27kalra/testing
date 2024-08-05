@@ -1,4 +1,4 @@
-Map params = new TreeMap<>(); 
+def params = [:] 
 
 pipeline {
     agent any
