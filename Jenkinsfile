@@ -12,12 +12,9 @@
                     gitCommitId = parameter.get("GIT_COMMIT")
                     gitUrl = parameter.get("GIT_URL")
                     gitBranch = parameter.get("GIT_BRANCH")
-                    //parameter.gitCommitAuthor = gitCommitAuthor
-                    //parameter.gitCommitMessage = gitCommitMessage
+                    parameter.gitCommitAuthor = gitCommitAuthor
+                    parameter.gitCommitMessage = gitCommitMessage
                     url = env.BUILD_URL
-                    println
-                    
-                    //gitCommitMessage = gitCommitMessage
                 }
                 // Use the credentials defined in Jenkins
                 //checkout scm
