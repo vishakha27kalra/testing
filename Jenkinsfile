@@ -1,42 +1,53 @@
- Map<String, String> parameter =[:]
+ //Map<String, String> parameter =[:]
  pipeline {
     agent any
     
     stages {
         stage('Checkout') {
             steps {
-                // Use the credentials defined in Jenkins
-                checkout scm
                 script {
-                    parameter = checkout scm
-                    //println parameter
+                    Map<String, String> parameter = checkout scm
+                    def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                    def gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
                     gitCommitId = parameter.get("GIT_COMMIT")
                     gitUrl = parameter.get("GIT_URL")
                     gitBranch = parameter.get("GIT_BRANCH")
-                    gitCommitAuthor = parameter.get("GIT_AUTHOR_NAME")
+                    gitCommitAuthor = gitCommitAuthor
                     url = env.BUILD_URL
-                    gitCommitMessage = parameter.get("GIT_COMMIT_MESSAGE")
-                    echo "hihihihi"
-                    println parameter
-                    
-                    // println gitCommitId
-                    // println url
-                    // println gitCommitMessage
-                    // println gitCommitAuthor
-                    // Fetching in-built variables after checkout
-                    
-                    //def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-                    //def gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
-                    // params = [
-                    //     url: "${env.BUILD_URL}",
-                    //     gitUrl: "${env.GIT_URL}",
-                    //     gitBranch: "${env.GIT_BRANCH}",
-                    //     gitCommitMessage: "${env.GIT_COMMIT_MESSAGE}",
-                    //     gitCommitId: "${env.GIT_COMMIT}",
-                    //     gitCommitAuthor: "${env.GIT_AUTHOR_NAME}"
-                    // ]
-                    // sh "env"
+                    gitCommitMessage = gitCommitMessage
                 }
+                // Use the credentials defined in Jenkins
+                //checkout scm
+                // script {
+                //     parameter = checkout scm
+                //     //println parameter
+                //     gitCommitId = parameter.get("GIT_COMMIT")
+                //     gitUrl = parameter.get("GIT_URL")
+                //     gitBranch = parameter.get("GIT_BRANCH")
+                //     gitCommitAuthor = parameter.get("GIT_AUTHOR_NAME")
+                //     url = env.BUILD_URL
+                //     gitCommitMessage = parameter.get("GIT_COMMIT_MESSAGE")
+                //     echo "hihihihi"
+                //     println parameter
+                    
+                //     // println gitCommitId
+                //     // println url
+                //     // println gitCommitMessage
+                //     // println gitCommitAuthor
+                //     // Fetching in-built variables after checkout
+                    
+                //     //def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                //     //def gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
+                //     // params = [
+                //     //     url: "${env.BUILD_URL}",
+                //     //     gitUrl: "${env.GIT_URL}",
+                //     //     gitBranch: "${env.GIT_BRANCH}",
+                //     //     gitCommitMessage: "${env.GIT_COMMIT_MESSAGE}",
+                //     //     gitCommitId: "${env.GIT_COMMIT}",
+                //     //     gitCommitAuthor: "${env.GIT_AUTHOR_NAME}"
+                //     // ]
+                //     // sh "env"
+                // }
             }
         }
         stage('Build') {
