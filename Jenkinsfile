@@ -95,10 +95,10 @@ def notifyGoogleChat(parameter, message) {
                             [
                                 "keyValue": [
                                     "topLabel": "Build URL",
-                                    "content": parameter.url,
+                                    "content": url,
                                     "onClick": [
                                         "openLink": [
-                                            "url": parameter.url
+                                            "url": url
                                         ]
                                     ]
                                 ]
@@ -106,13 +106,13 @@ def notifyGoogleChat(parameter, message) {
                             [
                                 "keyValue": [
                                     "topLabel": "Git URL",
-                                    "content": parameter.gitUrl
+                                    "content": gitUrl
                                 ]
                             ],
                             [
                                 "keyValue": [
                                     "topLabel": "Branch",
-                                    "content": parameter.gitBranch
+                                    "content": gitBranch
                                 ]
                             ],
                             [
@@ -124,7 +124,7 @@ def notifyGoogleChat(parameter, message) {
                             [
                                 "keyValue": [
                                     "topLabel": "Commit ID",
-                                    "content": parameter.gitCommitId
+                                    "content": gitCommitId
                                 ]
                             ],
                             [
