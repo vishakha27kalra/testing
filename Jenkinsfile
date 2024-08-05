@@ -1,3 +1,4 @@
+ Map<String, String> parameter =[:]
  pipeline {
     agent any
     
@@ -7,7 +8,7 @@
                 // Use the credentials defined in Jenkins
                 checkout scm
                 script {
-                    Map<String, String> parameter = checkout scm
+                    parameter = checkout scm
                     println parameter
                     gitCommitId = parameter.get("GIT_COMMIT")
                     gitUrl = parameter.get("GIT_URL")
