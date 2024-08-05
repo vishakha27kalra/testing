@@ -83,8 +83,8 @@ def notifyTeams(Map<String, String> parameter, String message) {
     echo "Message: ${message}"
     echo "Git URL: ${gitUrl}"
     echo "Branch: ${gitBranch}"
-    echo "Commit Message: ${gitCommitMessage}"
+    //echo "Commit Message: ${gitCommitMessage}"
     echo "Commit ID: ${gitCommitId}"
-    echo "Commit Author: ${gitCommitAuthor}"
+    //echo "Commit Author: ${gitCommitAuthor}"
     echo "build url: ${url}"
 }
