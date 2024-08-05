@@ -12,9 +12,10 @@
                     gitCommitId = parameter.get("GIT_COMMIT")
                     gitUrl = parameter.get("GIT_URL")
                     gitBranch = parameter.get("GIT_BRANCH")
-                    parameter.gitCommitAuthor = gitCommitAuthor
-                    parameter.gitCommitMessage = gitCommitMessage
+                    //parameter.gitCommitAuthor = gitCommitAuthor
+                    //parameter.gitCommitMessage = gitCommitMessage
                     url = env.BUILD_URL
+                    println
                     
                     //gitCommitMessage = gitCommitMessage
                 }
@@ -64,14 +65,14 @@
             script {
                 // Correctly assign the message variable
                 def message = "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
-                notifyTeams(parameter, message)
+                notifyGoogleChat(parameter, message)
             }
         }
         failure {
             script {
                 // Correctly assign the message variable
                 def message = "Build Failure: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
-                notifyTeams(parameter, message)
+                notifyGoogleChat(parameter, message)
             }
         }
         always {
@@ -80,14 +81,78 @@
     }
 }
 
-//Define the notifyTeams function
-def notifyTeams(Map<String, String> parameter, String message) {
-    echo "Message: ${message}"
-    echo "Git URL: ${gitUrl}"
-    echo "Branch: ${gitBranch}"
-    echo "Commit Message: ${parameter.gitCommitMessage}"
-    echo "Commit ID: ${gitCommitId}"
-    echo "Commit Author: ${parameter.gitCommitAuthor}"
-    echo "build url: ${url}"
-    println parameter
+
+def notifyGoogleChat(parameter, message) {
+    def googleChatWebhookUrl = 'https://chat.googleapis.com/v1/spaces/AAAAKgneo2I/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=_LNdvwSZ08X6DqkQACKgJlry34nvEc4vVDu0xM1g7ZI'
+    def payload = [
+        "cards": [
+            [
+                "header": [
+                    "title": message,
+                    "subtitle": "Jenkins CI/CD Pipeline Notification",
+                    "imageUrl": "https://www.jenkins.io/images/logos/jenkins/jenkins.png",
+                    "imageStyle": "IMAGE"
+                ],
+                "sections": [
+                    [
+                        "widgets": [
+                            [
+                                "keyValue": [
+                                    "topLabel": "Build URL",
+                                    "content": parameter.url,
+                                    "contentMultiline": true,
+                                    "onClick": [
+                                        "openLink": [
+                                            "url": parameter.url
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            [
+                                "keyValue": [
+                                    "topLabel": "Git URL",
+                                    "content": parameter.gitUrl,
+                                    "contentMultiline": true
+                                ]
+                            ],
+                            [
+                                "keyValue": [
+                                    "topLabel": "Branch",
+                                    "content": parameter.gitBranch,
+                                    "contentMultiline": true
+                                ]
+                            ],
+                            [
+                                "keyValue": [
+                                    "topLabel": "Commit Message",
+                                    "content": parameter.gitCommitMessage,
+                                    "contentMultiline": true
+                                ]
+                            ],
+                            [
+                                "keyValue": [
+                                    "topLabel": "Commit ID",
+                                    "content": parameter.gitCommitId,
+                                    "contentMultiline": true
+                                ]
+                            ],
+                            [
+                                "keyValue": [
+                                    "topLabel": "Commit Author",
+                                    "content": parameter.gitCommitAuthor,
+                                    "contentMultiline": true
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ]
+
+    httpRequest httpMode: 'POST',
+                acceptType: 'APPLICATION_JSON',
+                contentType: 'APPLICATION_JSON',
+                url: googleChatWebhookUrl,
+                requestBody: groovy.json.JsonOutput.toJson(payload)
 }
