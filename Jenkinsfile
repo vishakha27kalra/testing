@@ -14,7 +14,8 @@
                     gitBranch = parameter.get("GIT_BRANCH")
                     parameter.gitCommitAuthor = gitCommitAuthor
                     parameter.gitCommitMessage = gitCommitMessage
-                    url = env.BUILD_URL
+                    url = parameter.get("BUILD_URL")
+                    //url = env.BUILD_URL
                     //gitCommitMessage = gitCommitMessage
                 }
                 // Use the credentials defined in Jenkins
