@@ -15,8 +15,7 @@
                     parameter.gitCommitAuthor = gitCommitAuthor
                     parameter.gitCommitMessage = gitCommitMessage
                     url = env.BUILD_URL
-                    echo "hihihih"
-                    println parameter
+                    
                     //gitCommitMessage = gitCommitMessage
                 }
                 // Use the credentials defined in Jenkins
@@ -90,4 +89,5 @@ def notifyTeams(Map<String, String> parameter, String message) {
     echo "Commit ID: ${gitCommitId}"
     echo "Commit Author: ${parameter.gitCommitAuthor}"
     echo "build url: ${url}"
+    println parameter
 }
