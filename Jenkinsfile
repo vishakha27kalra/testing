@@ -141,7 +141,7 @@ def notifyGoogleChat(parameter, message) {
     ]
     
     // Print the payload for debugging
-    println(groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(payload)))
+    println(groovy.json.JsonOutput.toJson(payload))
 
     httpRequest httpMode: 'POST',
                 acceptType: 'APPLICATION_JSON',
