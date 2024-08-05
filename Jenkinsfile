@@ -87,8 +87,7 @@ def notifyGoogleChat(parameter, message) {
                 "header": [
                     "title": message,
                     "subtitle": "Jenkins CI/CD Pipeline Notification",
-                    "imageUrl": "https://www.jenkins.io/images/logos/jenkins/jenkins.png",
-                    "imageStyle": "IMAGE"
+                    "imageUrl": "https://www.jenkins.io/images/logos/jenkins/jenkins.png"
                 ],
                 "sections": [
                     [
@@ -97,7 +96,6 @@ def notifyGoogleChat(parameter, message) {
                                 "keyValue": [
                                     "topLabel": "Build URL",
                                     "content": parameter.url,
-                                    "contentMultiline": true,
                                     "onClick": [
                                         "openLink": [
                                             "url": parameter.url
@@ -108,36 +106,31 @@ def notifyGoogleChat(parameter, message) {
                             [
                                 "keyValue": [
                                     "topLabel": "Git URL",
-                                    "content": parameter.gitUrl,
-                                    "contentMultiline": true
+                                    "content": parameter.gitUrl
                                 ]
                             ],
                             [
                                 "keyValue": [
                                     "topLabel": "Branch",
-                                    "content": parameter.gitBranch,
-                                    "contentMultiline": true
+                                    "content": parameter.gitBranch
                                 ]
                             ],
                             [
                                 "keyValue": [
                                     "topLabel": "Commit Message",
-                                    "content": parameter.gitCommitMessage,
-                                    "contentMultiline": true
+                                    "content": parameter.gitCommitMessage
                                 ]
                             ],
                             [
                                 "keyValue": [
                                     "topLabel": "Commit ID",
-                                    "content": parameter.gitCommitId,
-                                    "contentMultiline": true
+                                    "content": parameter.gitCommitId
                                 ]
                             ],
                             [
                                 "keyValue": [
                                     "topLabel": "Commit Author",
-                                    "content": parameter.gitCommitAuthor,
-                                    "contentMultiline": true
+                                    "content": parameter.gitCommitAuthor
                                 ]
                             ]
                         ]
@@ -147,12 +140,12 @@ def notifyGoogleChat(parameter, message) {
         ]
     ]
     
+    // Print the payload for debugging
+    println(groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(payload)))
+
     httpRequest httpMode: 'POST',
                 acceptType: 'APPLICATION_JSON',
                 contentType: 'APPLICATION_JSON',
                 url: googleChatWebhookUrl,
                 requestBody: groovy.json.JsonOutput.toJson(payload)
 }
-
-
-
