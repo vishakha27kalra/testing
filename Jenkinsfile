@@ -48,14 +48,14 @@
             script {
                 // Correctly assign the message variable
                 def message = "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
-                //notifyTeams(parameter, message)
+                notifyTeams(parameter, message)
             }
         }
         failure {
             script {
                 // Correctly assign the message variable
                 def message = "Build Failure: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
-                //notifyTeams(parameter, message)
+                notifyTeams(parameter, message)
             }
         }
         always {
