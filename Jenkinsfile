@@ -9,7 +9,7 @@
                 checkout scm
                 script {
                     parameter = checkout scm
-                    println parameter
+                    //println parameter
                     gitCommitId = parameter.get("GIT_COMMIT")
                     gitUrl = parameter.get("GIT_URL")
                     gitBranch = parameter.get("GIT_BRANCH")
@@ -64,7 +64,7 @@
     }
 }
 
-Define the notifyTeams function
+//Define the notifyTeams function
 def notifyTeams(Map<String, String> parameter, String message) {
     echo "Message: ${message}"
     echo "Git URL: ${gitUrl}"
@@ -72,4 +72,5 @@ def notifyTeams(Map<String, String> parameter, String message) {
     echo "Commit Message: ${gitCommitMessage}"
     echo "Commit ID: ${gitCommitId}"
     echo "Commit Author: ${gitCommitAuthor}"
+    echo "build url: ${url}"
 }
