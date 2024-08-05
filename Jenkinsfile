@@ -8,11 +8,11 @@
                 script {
                     parameter = checkout scm
                     //def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-                    //def gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
+                    def gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
                     gitCommitId = parameter.get("GIT_COMMIT")
                     gitUrl = parameter.get("GIT_URL")
                     gitBranch = parameter.get("GIT_BRANCH")
-                    //gitCommitAuthor = gitCommitAuthor
+                    parameter.gitCommitAuthor = gitCommitAuthor
                     url = env.BUILD_URL
                     //gitCommitMessage = gitCommitMessage
                 }
@@ -85,6 +85,6 @@ def notifyTeams(Map<String, String> parameter, String message) {
     echo "Branch: ${gitBranch}"
     //echo "Commit Message: ${gitCommitMessage}"
     echo "Commit ID: ${gitCommitId}"
-    //echo "Commit Author: ${gitCommitAuthor}"
+    echo "Commit Author: ${gitCommitAuthor}"
     echo "build url: ${url}"
 }
