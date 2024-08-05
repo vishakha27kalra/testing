@@ -9,10 +9,12 @@
                 script {
                     Map<String, String> parameter = checkout scm
                     println parameter
-                    GIT_COMMIT = parameter.get("GIT_COMMIT");
-                    GIT_PREVIOUS_SUCCESSFUL_COMMIT = parameter.get("GIT_PREVIOUS_SUCCESSFUL_COMMIT");
-                    println GIT_PREVIOUS_SUCCESSFUL_COMMIT;
-                    println GIT_COMMIT;
+                    gitCommitId = parameter.get("GIT_COMMIT");
+                    gitUrl = parameter.get("GIT_URL")
+                    gitBranch = parameter.get("GIT_BRANCH")
+                    println gitCommitId;
+                    println gitUrl;
+                    println gitBranch;
                     // Fetching in-built variables after checkout
                     
                     //def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
