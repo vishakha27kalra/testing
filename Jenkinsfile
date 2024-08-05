@@ -17,7 +17,7 @@ pipeline {
                         url: "${env.BUILD_URL}",
                         gitUrl: "${env.GIT_URL}",
                         gitBranch: "${env.GIT_BRANCH}",
-                        gitCommitMessage: "${GIT_PREVIOUS_COMMIT}",
+                        gitCommitMessage: "${env.GIT_COMMIT_MESSAGE}",
                         gitCommitId: "${env.GIT_COMMIT}",
                         gitCommitAuthor: "${env.GIT_AUTHOR_NAME}"
                     ]
