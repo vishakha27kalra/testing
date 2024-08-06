@@ -7,15 +7,16 @@
             steps {
                 script {
                     parameter = checkout scm
-                    def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                    //def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                     def gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
                     gitCommitId = parameter.get("GIT_COMMIT")
                     gitUrl = parameter.get("GIT_URL")
                     gitBranch = parameter.get("GIT_BRANCH")
-                    parameter.gitCommitAuthor = gitCommitAuthor
+                    //parameter.gitCommitAuthor = gitCommitAuthor
                     parameter.gitCommitMessage = gitCommitMessage
                     url = env.BUILD_URL
                     sh "env"
+                    println parameter 
                 }
                 // Use the credentials defined in Jenkins
                 //checkout scm
