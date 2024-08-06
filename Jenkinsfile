@@ -7,14 +7,13 @@
             steps {
                 script {
                     parameter = checkout scm
-                    //def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-                    def gitCommitAuthor = sh(script: 'git log -1 --pretty=%an', returnStdout: true).trim()
+                    def gitCommitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                     gitCommitId = parameter.get("GIT_COMMIT")
                     gitUrl = parameter.get("GIT_URL")
                     gitBranch = parameter.get("GIT_BRANCH")
-                    //parameter.gitCommitAuthor = gitCommitAuthor
-                    parameter.gitCommitMessage = gitCommitMessage
+                    gitCommitAuthor = parameter.get("GIT_AUTHOR_NAME")
                     url = env.BUILD_URL
+                    parameter.gitCommitMessage = gitCommitMessage
                     sh "env"
                     println parameter 
                 }
@@ -132,7 +131,7 @@ def notifyGoogleChat(parameter, message) {
                             [
                                 "keyValue": [
                                     "topLabel": "Commit Author",
-                                    "content": parameter.gitCommitAuthor
+                                    "content": gitCommitAuthor
                                 ]
                             ]
                         ]
