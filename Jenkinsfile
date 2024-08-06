@@ -15,6 +15,7 @@
                     parameter.gitCommitAuthor = gitCommitAuthor
                     parameter.gitCommitMessage = gitCommitMessage
                     url = env.BUILD_URL
+                    sh "env"
                 }
                 // Use the credentials defined in Jenkins
                 //checkout scm
