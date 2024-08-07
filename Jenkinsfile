@@ -33,7 +33,7 @@
                         echo "Building branch ${env.BRANCH_NAME} by user ${jobUserId}"
                         // Your build steps here
                     } else {
-                        echo "Pipeline execution not authorized for user ${jobUserId} on branch ${env.BRANCH_NAME}"
+                        echo "Pipeline execution not authorized for user ${jobUserId} on branch ${gitBranch}"
                     }
                 }
             }
